@@ -1,0 +1,10 @@
+E:\Programs\Visual Studio\source project\OnlineStore\StoreDB\bin\Debug\StoreDB.dacpac
+E:\Programs\Visual Studio\source project\OnlineStore\StoreDB\bin\Debug\StoreDB.dll
+E:\Programs\Visual Studio\source project\OnlineStore\StoreDB\bin\Debug\StoreDB.pdb
+E:\Programs\Visual Studio\source project\OnlineStore\StoreDB\obj\Debug\StoreDB.sqlproj.AssemblyReference.cache
+E:\Programs\Visual Studio\source project\OnlineStore\StoreDB\obj\Debug\Model.xml
+E:\Programs\Visual Studio\source project\OnlineStore\StoreDB\obj\Debug\refactor.xml
+E:\Programs\Visual Studio\source project\OnlineStore\StoreDB\obj\Debug\postdeploy.sql
+E:\Programs\Visual Studio\source project\OnlineStore\StoreDB\obj\Debug\predeploy.sql
+E:\Programs\Visual Studio\source project\OnlineStore\StoreDB\obj\Debug\StoreDB.dll
+E:\Programs\Visual Studio\source project\OnlineStore\StoreDB\obj\Debug\StoreDB.pdb

@@ -1,0 +1,14 @@
+E:\Programs\Visual Studio\source project\OnlineStore\DataAcessLayer\bin\Debug\net8.0\DataAcessLayer.deps.json
+E:\Programs\Visual Studio\source project\OnlineStore\DataAcessLayer\bin\Debug\net8.0\DataAcessLayer.runtimeconfig.json
+E:\Programs\Visual Studio\source project\OnlineStore\DataAcessLayer\bin\Debug\net8.0\DataAcessLayer.dll
+E:\Programs\Visual Studio\source project\OnlineStore\DataAcessLayer\bin\Debug\net8.0\DataAcessLayer.pdb
+E:\Programs\Visual Studio\source project\OnlineStore\DataAcessLayer\obj\Debug\net8.0\DataAcessLayer.csproj.AssemblyReference.cache
+E:\Programs\Visual Studio\source project\OnlineStore\DataAcessLayer\obj\Debug\net8.0\DataAcessLayer.GeneratedMSBuildEditorConfig.editorconfig
+E:\Programs\Visual Studio\source project\OnlineStore\DataAcessLayer\obj\Debug\net8.0\DataAcessLayer.AssemblyInfoInputs.cache
+E:\Programs\Visual Studio\source project\OnlineStore\DataAcessLayer\obj\Debug\net8.0\DataAcessLayer.AssemblyInfo.cs
+E:\Programs\Visual Studio\source project\OnlineStore\DataAcessLayer\obj\Debug\net8.0\DataAcessLayer.csproj.CoreCompileInputs.cache
+E:\Programs\Visual Studio\source project\OnlineStore\DataAcessLayer\obj\Debug\net8.0\DataAcessLayer.dll
+E:\Programs\Visual Studio\source project\OnlineStore\DataAcessLayer\obj\Debug\net8.0\refint\DataAcessLayer.dll
+E:\Programs\Visual Studio\source project\OnlineStore\DataAcessLayer\obj\Debug\net8.0\DataAcessLayer.pdb
+E:\Programs\Visual Studio\source project\OnlineStore\DataAcessLayer\obj\Debug\net8.0\DataAcessLayer.genruntimeconfig.cache
+E:\Programs\Visual Studio\source project\OnlineStore\DataAcessLayer\obj\Debug\net8.0\ref\DataAcessLayer.dll
