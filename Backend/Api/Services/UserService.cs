@@ -56,10 +56,10 @@ namespace Backend.Api.Services
             };
         }
 
-        public bool Delete(Guid uid)
+        /*public bool Delete(Guid uid)
         {
             throw new NotImplementedException();
-        }
+        }*/
 
         private string GetHash(string password)
         {

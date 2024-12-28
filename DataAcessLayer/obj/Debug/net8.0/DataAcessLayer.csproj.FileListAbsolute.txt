@@ -12,3 +12,4 @@ E:\Programs\Visual Studio\source project\OnlineStore\DataAcessLayer\obj\Debug\ne
 E:\Programs\Visual Studio\source project\OnlineStore\DataAcessLayer\obj\Debug\net8.0\DataAcessLayer.pdb
 E:\Programs\Visual Studio\source project\OnlineStore\DataAcessLayer\obj\Debug\net8.0\DataAcessLayer.genruntimeconfig.cache
 E:\Programs\Visual Studio\source project\OnlineStore\DataAcessLayer\obj\Debug\net8.0\ref\DataAcessLayer.dll
+E:\Programs\Visual Studio\source project\OnlineStore\DataAcessLayer\obj\Debug\net8.0\DataAcessLayer.sourcelink.json

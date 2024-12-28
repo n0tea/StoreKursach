@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Backend.Api.Services;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 using Backend.Api.Contract;
 
 namespace Backend.Api.Controllers
@@ -8,25 +10,42 @@ namespace Backend.Api.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        [HttpPost]
-        public ActionResult<Guid> Register(string email, string password)
+        private readonly OrderService _orderService;
+
+        public OrderController(OrderService orderService)
         {
-            throw new NotImplementedException();
+            _orderService = orderService;
         }
 
         [HttpPost]
-        public ActionResult<Guid> Login(string email, string password)
+        [Authorize]
+        public ActionResult<Guid> CreateOrder([FromBody] CreateOrderRequest request)
         {
-            throw new NotImplementedException();
+            try
+            {
+                // Получаем Uid текущего пользователя из токена
+                var userUid = GetUserUidFromToken();
+                if (userUid == null) return Unauthorized();
+
+                // Создаем заказ для пользователя
+                var orderUid = _orderService.CreateOrder(userUid.Value, request);
+
+                return Ok(orderUid);
+            }
+            catch (Exception ex)
+            {
+                // Если произошла ошибка, возвращаем BadRequest с подробностями
+                return BadRequest(new { Error = ex.Message });
+            }
         }
 
-        [HttpGet]
-        public ActionResult<UserInfo> GetInfo(Guid uid) {
-            throw new NotImplementedException();
-        }
-        [HttpDelete]
-        public ActionResult Delete(Guid uid) {
-            throw new NotImplementedException();
+        private Guid? GetUserUidFromToken()
+        {
+            // Извлекаем Uid пользователя из токена
+            var userClaim = User.FindFirst(ClaimTypes.NameIdentifier); // Убедитесь, что Uid пользователя включается в токен
+            if (userClaim == null) return null;
+
+            return Guid.TryParse(userClaim.Value, out var userUid) ? userUid : null;
         }
     }
 }

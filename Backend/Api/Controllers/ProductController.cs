@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Backend.Api.Services;
 using Backend.Api.Contract;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Backend.Api.Controllers
 {
@@ -8,25 +9,59 @@ namespace Backend.Api.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        [HttpPost]
-        public ActionResult<Guid> Register(string email, string password)
+        private readonly ProductService _productService;
+
+        public ProductController(ProductService productService)
         {
-            throw new NotImplementedException();
+            _productService = productService;
         }
 
+        // Добавить новый товар в базу
         [HttpPost]
-        public ActionResult<Guid> Login(string email, string password)
+        [Authorize]
+        public ActionResult<Guid> AddProduct([FromBody] AddProductRequest request)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var productUid = _productService.AddProduct(request);
+                return Ok(productUid);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
         }
 
+        // Получить все товары из базы данных
         [HttpGet]
-        public ActionResult<UserInfo> GetInfo(Guid uid) {
-            throw new NotImplementedException();
+        [AllowAnonymous]
+        public ActionResult<List<ProductResponse>> GetAllProducts()
+        {
+            try
+            {
+                var products = _productService.GetAllProducts();
+                return Ok(products);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
         }
-        [HttpDelete]
-        public ActionResult Delete(Guid uid) {
-            throw new NotImplementedException();
+
+        // Проверить наличие товара по UID
+        [HttpGet("{productUid}")]
+        [AllowAnonymous]
+        public ActionResult<bool> CheckProductAvailability(Guid productUid)
+        {
+            try
+            {
+                var isAvailable = _productService.CheckProductAvailability(productUid);
+                return Ok(isAvailable);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
         }
     }
 }

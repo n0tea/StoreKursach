@@ -167,3 +167,10 @@ E:\Programs\Visual Studio\source project\OnlineStore\Backend\bin\Debug\net8.0\ru
 E:\Programs\Visual Studio\source project\OnlineStore\Backend\bin\Debug\net8.0\runtimes\win-x86\native\vcruntime140.dll
 E:\Programs\Visual Studio\source project\OnlineStore\Backend\bin\Debug\net8.0\runtimes\win-x86\native\zlib1.dll
 E:\Programs\Visual Studio\source project\OnlineStore\Backend\bin\Debug\net8.0\runtimes\win-x86\native\zstd.dll
+E:\Programs\Visual Studio\source project\OnlineStore\Backend\obj\Debug\net8.0\Backend.sourcelink.json
+E:\Programs\Visual Studio\source project\OnlineStore\Backend\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+E:\Programs\Visual Studio\source project\OnlineStore\Backend\bin\Debug\net8.0\MailKit.dll
+E:\Programs\Visual Studio\source project\OnlineStore\Backend\bin\Debug\net8.0\MimeKit.dll
+E:\Programs\Visual Studio\source project\OnlineStore\Backend\bin\Debug\net8.0\System.Formats.Asn1.dll
+E:\Programs\Visual Studio\source project\OnlineStore\Backend\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+E:\Programs\Visual Studio\source project\OnlineStore\Backend\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll

@@ -10,7 +10,7 @@ namespace DataAcessLayer.Entities
     {
         public long Id { get; init; }
         public Guid Uid { get; init; } //= Guid.NewGuid();
-        public long UserId { get; set; } // Связь с User
+        public Guid UserId { get; set; } // Связь с User
         public decimal TotalPrice { get; set; }
         public DateTimeOffset CreationTimestamp { get; set; }
     }

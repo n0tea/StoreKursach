@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Backend.Api.Contract;
 using Backend.Api.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Backend.Api.Controllers
 {
@@ -10,19 +11,25 @@ namespace Backend.Api.Controllers
     public class UserController : ControllerBase
     {
         private readonly UserService _service;
-        public UserController(UserService service)
+        private readonly JwtService _jwtService;
+        public UserController(UserService service, JwtService jwtService)
         {
             _service = service;
+            _jwtService = jwtService;
         } // в контрукторе
 
         [HttpPost]
-        public ActionResult<Guid> Register(string email, string password)
+        [AllowAnonymous]
+        public ActionResult<JwtToken> Register(string email, string password)
         {
-            return _service.Register(email, password);
+            var uid = _service.Register(email, password);
+
+            return new JwtToken() { Token = _jwtService.GenerateToken(uid, email) };
         }
 
         [HttpPost]
-        public ActionResult<Guid> Login(string email, string password)
+        [AllowAnonymous]
+        public ActionResult<JwtToken> Login(string email, string password)
         {
             var uid = _service.Login(email, password);
 
@@ -31,16 +38,18 @@ namespace Backend.Api.Controllers
                 ModelState.AddModelError("user", "Invalid email or password");
                 return BadRequest(ModelState);
             }
-            return Ok(uid);
+            
+            return new JwtToken() { Token = _jwtService.GenerateToken(uid.Value, email) };
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult<UserInfo> GetInfo(Guid uid) {
             throw new NotImplementedException();
         }
-        [HttpDelete]
+        /*[HttpDelete]
         public ActionResult Delete(Guid uid) {
             throw new NotImplementedException();
-        }
+        }*/
     }
 }
