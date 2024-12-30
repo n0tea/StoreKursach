@@ -17,33 +17,33 @@ namespace Backend.Api.Services
             _userContext = userContext;
         }
 
-        public Guid Register(string email, string password)
+        public Guid Register(UserCredentials credentials)
         {
-            using var sha = SHA512.Create();
-            var bytes = sha.ComputeHash(Encoding.UTF8.GetBytes(password));
+            //using var sha = SHA512.Create();
+            //var bytes = sha.ComputeHash(Encoding.UTF8.GetBytes(password));  // перенес в отдельный метод
 
             var user = new User
             {
                 Uid = Guid.NewGuid(),
-                Email = email,
-                Password = GetHash(password),
+                Email = credentials.Email,
+                Password = GetHash(credentials.Password),
                 CreationTimestamp = DateTimeOffset.UtcNow,
             };
-            _userContext.Set<User>().Add(user);
+            _userContext.Set<User>().Add(user);  // можно просто add(user) 
             _userContext.SaveChanges();
 
             return user.Uid;
         }
 
-        public Guid? Login(string email, string password)
+        public Guid? Login(UserCredentials credentials)
         {
-            var hashed = GetHash(password);
-            var user = _userContext.Set<User>().SingleOrDefault(x => x.Email == email && x.Password == hashed);
+            var hashed = GetHash(credentials.Password);
+            var user = _userContext.Set<User>().SingleOrDefault(x => x.Email == credentials.Email && x.Password == hashed);
 
             return user?.Uid;
         }
 
-        public Contract.UserInfo? GetInfo(Guid uid)
+        public UserInfo?/*Contract.UserInfo?*/ GetInfo(Guid uid)
         {
             var user = _userContext.Set<User>().SingleOrDefault(x => x.Uid == uid);
 
@@ -53,6 +53,7 @@ namespace Backend.Api.Services
             {
                 Uid = user.Uid,
                 Email = user.Email,
+                //Date = 
             };
         }
 

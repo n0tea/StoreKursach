@@ -20,18 +20,18 @@ namespace Backend.Api.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult<JwtToken> Register(string email, string password)
+        public ActionResult<JwtToken> Register(UserCredentials credentials)
         {
-            var uid = _service.Register(email, password);
+            var uid = _service.Register(credentials);
 
-            return new JwtToken() { Token = _jwtService.GenerateToken(uid, email) };
+            return new JwtToken() { Token = _jwtService.GenerateToken(uid, credentials.Email) };
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult<JwtToken> Login(string email, string password)
+        public ActionResult<JwtToken> Login(UserCredentials credentials)
         {
-            var uid = _service.Login(email, password);
+            var uid = _service.Login(credentials);
 
             if (uid == null)
             {
@@ -39,13 +39,17 @@ namespace Backend.Api.Controllers
                 return BadRequest(ModelState);
             }
             
-            return new JwtToken() { Token = _jwtService.GenerateToken(uid.Value, email) };
+            return new JwtToken() { Token = _jwtService.GenerateToken(uid.Value, credentials.Email) };
         }
 
         [HttpGet]
         [Authorize]
         public ActionResult<UserInfo> GetInfo(Guid uid) {
-            throw new NotImplementedException();
+            
+            var user =  _service.GetInfo(uid);
+            if (user == null) return NotFound();
+
+            return user;
         }
         /*[HttpDelete]
         public ActionResult Delete(Guid uid) {

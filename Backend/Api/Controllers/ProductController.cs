@@ -18,7 +18,7 @@ namespace Backend.Api.Controllers
 
         // Добавить новый товар в базу
         [HttpPost]
-        [Authorize]
+        [AllowAnonymous]
         public ActionResult<Guid> AddProduct([FromBody] AddProductRequest request)
         {
             try

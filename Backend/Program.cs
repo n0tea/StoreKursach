@@ -67,15 +67,21 @@ builder.Services.AddDbContext<OrderDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("OrdersDb")));
 
 // JWT Authentication setup
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+
+    .AddJwtBearer("Bearer", options =>
     {
         var config = builder.Services.BuildServiceProvider().GetRequiredService<IOptions<JwtConfigurationOptions>>().Value;
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
             ValidateAudience = true,
-            ValidateLifetime = true,
+            ValidateLifetime = false,
             ValidateIssuerSigningKey = true,
             ValidIssuer = builder.Configuration["JWT:Issuer"],
             ValidAudience = builder.Configuration["JWT:Audience"],
@@ -85,6 +91,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddTransient<UserService>();
 builder.Services.AddTransient<JwtService>();
+
+builder.Services.AddTransient<ProductService>();
+builder.Services.AddTransient<NotificationService>();
+builder.Services.AddTransient<OrderService>();
 
 // Kafka Consumer
 builder.Services.AddSingleton<IConsumer<string, string>>(provider =>
