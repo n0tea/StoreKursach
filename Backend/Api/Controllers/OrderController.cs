@@ -23,12 +23,15 @@ namespace Backend.Api.Controllers
         {
             try
             {
-                // Получаем Uid текущего пользователя из токена
-                var userUid = GetUserUidFromToken();
-                if (userUid == null) return Unauthorized();
+                // Получаем пользовательские данные (идентификатор и email) из токена
+                var (userId, email) = GetUserInfoFromToken();
+                if (userId == null || email == null)
+                {
+                    return Unauthorized();
+                }
 
                 // Создаем заказ для пользователя
-                var orderUid = _orderService.CreateOrder(userUid.Value, request);
+                var orderUid = _orderService.CreateOrder(userId.Value, email, request);
 
                 return Ok(orderUid);
             }
@@ -39,13 +42,23 @@ namespace Backend.Api.Controllers
             }
         }
 
-        private Guid? GetUserUidFromToken()
+        private (long? userId, string? email) GetUserInfoFromToken()
         {
             // Извлекаем Uid пользователя из токена
-            var userClaim = User.FindFirst(ClaimTypes.NameIdentifier); // Убедитесь, что Uid пользователя включается в токен
-            if (userClaim == null) return null;
+            var userClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userClaim == null)
+                return (null, null);
 
-            return Guid.TryParse(userClaim.Value, out var userUid) ? userUid : null;
+            if (!Guid.TryParse(userClaim.Value, out var userUid))
+                return (null, null);
+
+            // Извлекаем почту из токена
+            var emailClaim = User.FindFirst(ClaimTypes.Email);
+            var email = emailClaim?.Value;
+
+            var userId = _orderService.GetUserIdByUid(userUid);
+
+            return (userId, email);
         }
     }
 }

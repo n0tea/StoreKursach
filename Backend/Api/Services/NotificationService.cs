@@ -70,7 +70,8 @@ namespace Backend.Api.Services
         {
             // Заглушка: добавьте здесь логику получения email пользователя
             // Например, запрос к базе данных
-            return "user@example.com";
+            //return "user@example.com";
+            return "artnotea04@gmail.com";
         }
     }
 

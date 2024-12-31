@@ -9,16 +9,18 @@ namespace Backend.Api.Services
     {
         private readonly OrderDbContext _orderContext;
         private readonly ProductDbContext _productContext;
+        private readonly UserDbContext _userContext;
         private readonly IProducer<string, string> _kafkaProducer;
 
-        public OrderService(OrderDbContext orderContext, ProductDbContext productContext, IProducer<string, string> kafkaProducer)
+        public OrderService(UserDbContext userContext, OrderDbContext orderContext, ProductDbContext productContext, IProducer<string, string> kafkaProducer)
         {
             _orderContext = orderContext;
             _productContext = productContext;
+            _userContext = userContext;
             _kafkaProducer = kafkaProducer;
         }
 
-        public Guid CreateOrder(Guid userUid, CreateOrderRequest request)
+        public Guid CreateOrder(long userId, string email, CreateOrderRequest request)
         {
             decimal totalPrice = 0;
             var orderItems = new List<OrderItem>();
@@ -50,7 +52,7 @@ namespace Backend.Api.Services
             var order = new Order
             {
                 Uid = Guid.NewGuid(),
-                UserId = userUid,
+                UserId = userId,
                 TotalPrice = totalPrice,
                 CreationTimestamp = DateTimeOffset.UtcNow
             };
@@ -66,17 +68,25 @@ namespace Backend.Api.Services
             _orderContext.SaveChanges();
 
             // Отправляем сообщение в Kafka
-            SendOrderToKafka(order.Uid, userUid, totalPrice);
+            SendOrderToKafka(order.Uid, userId, email, totalPrice);
 
             return order.Uid;
         }
 
-        private void SendOrderToKafka(Guid orderUid, Guid userUid, decimal totalPrice)
+        public long? GetUserIdByUid(Guid userUid)
+        {
+            // Ищем пользователя по Uid и извлекаем его Id
+            var user = _userContext.Users.FirstOrDefault(u => u.Uid == userUid);
+            return user?.Id;
+        }
+
+        private void SendOrderToKafka(Guid orderUid, long userId, string email, decimal totalPrice)
         {
             var message = new
             {
                 OrderId = orderUid,
-                UserId = userUid,
+                UserId = userId,
+                UserEmail = email,
                 TotalPrice = totalPrice,
                 Timestamp = DateTimeOffset.UtcNow
             };

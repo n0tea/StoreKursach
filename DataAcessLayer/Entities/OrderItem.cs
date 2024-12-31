@@ -9,10 +9,12 @@ namespace DataAcessLayer.Entities
     public class OrderItem
     {
         public long Id { get; init; }
-        public Guid Uid { get; init; } //= Guid.NewGuid();
-        public long OrderId { get; set; } // Связь с Order
-        public long ProductId { get; set; } // Связь с Product
+        public Guid Uid { get; init; }
+        public long OrderId { get; set; } 
+        public long ProductId { get; set; } // внешняя связь из друго бд будет
         public int Quantity { get; set; }
         public decimal Price { get; set; }
+
+        public Order Order { get; set; }
     }
 }

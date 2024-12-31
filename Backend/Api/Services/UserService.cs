@@ -6,6 +6,7 @@ using DataAcessLayer;
 using DataAcessLayer.Entities;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Api.Services
 {
@@ -56,12 +57,7 @@ namespace Backend.Api.Services
                 //Date = 
             };
         }
-
-        /*public bool Delete(Guid uid)
-        {
-            throw new NotImplementedException();
-        }*/
-
+       
         private string GetHash(string password)
         {
             using var sha = SHA512.Create();
